@@ -1,46 +1,28 @@
-# Getting Started with Create React App
+Tymeshift Test
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Hey! First of all it's really a pleasure to participate of this part of the interview.
 
-## Available Scripts
+I got two ways to implement the task, and i will explain in next steps:
 
-In the project directory, you can run:
+1) I thougth in a better way to ensure usability to final user, using SWR (state-while-revalidate).
+If was asking to implement a full CRUD, delete, create and update some card element would bring some performance complications. 
+The principal one: Everytime that we would need to call the endpoint from API, all the data would re-render the entire application. 
+Using SWR this won't happen, because it will just re-render the parts that really need to be re-rendered.
 
-### `yarn start`
+2) I thougth in the most basic example of fetching the data from an API, and just rendering in a useEffect hook as usual.
+I really prefer the first one, not because of time to calling an api or something (in the end it's almost the same), but just because it's better for the final user.
+Ok, to make the SWR call work, will be so simple:
+just uncomment the lines below:
+import {useFetch} from './hooks/useFetch'; at line 8
+const {data: infoCards} = useFetch('https://6033c4d8843b15001793194e.mockapi.io/api/locations'); at line 13
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+And comment this lines here:
+import { useEffect, useState } from 'react'; line 1
+const [infoCards, setInfoCards] = useState([]); line 11
+/* useEffect(()=>{
+      fetch('https://6033c4d8843b15001793194e.mockapi.io/api/locations')
+      .then(res => res.json())
+      .then(data => setInfoCards(data))
+  }, []) */ (all the useEffect hook, lines 14 until 18)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+I hope you guys enjoy!

@@ -1,25 +1,42 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-
+import { useEffect, useState } from 'react';
+import { GlobalStyle } from './styles/global';
+import { AppContainer, CardsContainer } from './styles/AppStyles'
+import { Header } from './components/header';
+import { Card } from './components/card';
+/* import {useFetch} from './hooks/useFetch'; */
+import {ApiTypes} from './types/apiTypes'
 function App() {
+
+  const [infoCards, setInfoCards] = useState([])
+/* const {data: infoCards} = useFetch('https://6033c4d8843b15001793194e.mockapi.io/api/locations') */
+  
+  useEffect(()=>{
+      fetch('https://6033c4d8843b15001793194e.mockapi.io/api/locations')
+      .then(res => res.json())
+      .then(data => setInfoCards(data))
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AppContainer>
+      <GlobalStyle />
+      <Header />
+      <CardsContainer>       
+         { 
+          infoCards && infoCards.map((info: ApiTypes, index: number)=>{
+            return (
+            <Card 
+              description={info.description} 
+              name={info.name} 
+              key={index} 
+              createdAt={info.createdAt} 
+              userCount={info.userCount}
+            />
+            )
+          })
+
+        }
+      </CardsContainer>
+    </AppContainer>
   );
 }
 
