@@ -1,6 +1,8 @@
 Tymeshift Test
 
-Hey! First of all it's really a pleasure to participate of this part of the interview.
+Hey! First of all it's really a pleasure to participate of this part of the interview! And please, remember to install all the dependencies with the command "yarn"
+or
+if you want to use npm install, just remember to exclude the yarn.lock file.
 
 I got two ways to implement the task, and i will explain in next steps:
 
